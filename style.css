@@ -1,0 +1,36 @@
+/*import font*/
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+/*define custom variables*/
+:root{
+    /* 1 Bit Monitor Glow Palette by Polyducks https://lospec.com/palette-list/1bit-monitor-glow */
+    --col01: #222323;
+    --col02: #f0f6f0;
+    --shadow: #dce2dc;
+    /* Late Night Bath Palette by sukinapan https://lospec.com/palette-list/late-night-bath */
+    --col03: #ffc4b8;
+    --col04: #5b5d70;
+    --col05: #74838c;
+    --col06: #f69197;
+    --border: solid 0.125rem var(--col01);
+    --gap-spacing: 1rem;
+}
+
+body {
+    font-family: "Work Sans", serif;
+    background-color: var(--col02);
+    color: var(--col01);
+    line-height: 1.5;
+    padding: 1rem;
+}
+
+dialog[open] {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+dialog::backdrop {
+    background-color: #5b5d70;
+    opacity: 0.2;
+}
