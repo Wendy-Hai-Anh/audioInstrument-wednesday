@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="keyboardControllerStyle.css">
 
     <script src="https://unpkg.com/tone"></script>
     <script src="main.js" defer></script>
@@ -26,6 +27,59 @@
 
     <main>
         <button id="test-button">sound check</button>
+        <!--
+            This is a template for a keyboard controller : we will look at building this style of
+            input in class, but feel free to reference my code pattern. I've modularised the CSS &
+            JS portions into their own file, but they rely on an HTML structure like that below.
+            -->
+        <div class="keyboardContainer">
+            <div class="octaveContainer" data-octave="3">
+                <div class="whiteKeyContainer">
+                    <button class="whiteKey" data-note="c"></button>
+                    <button class="whiteKey" data-note="d"></button>
+                    <button class="whiteKey" data-note="e"></button>
+                    <button class="whiteKey" data-note="f"></button>
+                    <button class="whiteKey" data-note="g"></button>
+                    <button class="whiteKey" data-note="a"></button>
+                    <button class="whiteKey" data-note="b"></button>
+                </div>
+                <div class="blackKeyContainer">
+                    <div class="blackKeySpacer"></div>
+                    <button class="blackKey" data-note="c#"></button>
+                    <button class="blackKey" data-note="d#"></button>
+                    <div class="blackKeySpacer"></div>
+                    <div class="blackKeySpacer"></div>
+                    <button class="blackKey" data-note="f#"></button>
+                    <button class="blackKey" data-note="g#"></button>
+                    <button class="blackKey" data-note="a#"></button>
+                    <div class="blackKeySpacer"></div>
+                </div>
+            </div>
+
+            <div class="octaveContainer" data-octave="4">
+                <div class="whiteKeyContainer">
+                    <button class="whiteKey" data-note="c"></button>
+                    <button class="whiteKey" data-note="d"></button>
+                    <button class="whiteKey" data-note="e"></button>
+                    <button class="whiteKey" data-note="f"></button>
+                    <button class="whiteKey" data-note="g"></button>
+                    <button class="whiteKey" data-note="a"></button>
+                    <button class="whiteKey" data-note="b"></button>
+                </div>
+                <div class="blackKeyContainer">
+                    <div class="blackKeySpacer"></div>
+                    <button class="blackKey" data-note="c#"></button>
+                    <button class="blackKey" data-note="d#"></button>
+                    <div class="blackKeySpacer"></div>
+                    <div class="blackKeySpacer"></div>
+                    <button class="blackKey" data-note="f#"></button>
+                    <button class="blackKey" data-note="g#"></button>
+                    <button class="blackKey" data-note="a#"></button>
+                    <div class="blackKeySpacer"></div>
+                </div>
+            </div>
+
+        </div>
     </main>
 
 </body>

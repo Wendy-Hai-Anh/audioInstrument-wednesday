@@ -1,0 +1,96 @@
+/*please feel free to reference this design pattern if you're building a keyboard*/
+/*note that it requires the same html structure present in index.html, but is quite customisable otherwise*/
+/*the main thing to watch for is changing aspect ratio based on the amount of octaves*/
+/*that it uses dynamic classes instead of :hover or :active (see the keyboardController.js)*/
+/*and that it references my specific names for my custom colour variables*/
+
+/*this aspect ratio is assuming two octaves*/
+/*each octave should be 15/10*/
+/*so adding more octaves means adding 15 per octave to the first number*/
+/*eg three octaves would be 45/10*/
+.keyboardContainer {
+    display: flex;
+    aspect-ratio: 30/10;
+    /*height: 10rem;*/
+}
+/*much like above the width will need to account for the amount of octaves*/
+/*eg three octaves would mean 33.3333%*/
+.octaveContainer {
+    position: relative;
+    width: 50%;
+}
+
+.whiteKeyContainer {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: stretch;
+}
+
+.whiteKey {
+    background-color: var(--col02);
+    border: var(--border);
+    border-left: none;
+    border-radius: 0 0 0.25rem 0.25rem;
+    flex: 1;
+    cursor: pointer;
+}
+.keyboardContainer > .octaveContainer:first-of-type > .whiteKeyContainer > .whiteKey:first-of-type {
+    border: var(--border);
+}
+
+.blackKeyContainer {
+    position: absolute;
+    top: 0;
+    display: flex;
+    height: 57.5%;
+    width: 100%;
+    align-items: stretch;
+    pointer-events: none;
+}
+
+.blackKey {
+    margin: 0;
+    background-color: var(--col02);
+    border: var(--border);
+    border-left: none;
+    border-radius: 0 0 0.25rem 0.25rem;
+    flex: 1;
+    cursor: pointer;
+    pointer-events: all;
+}
+/*because we have to hard code values into pattern i've created separate rulesets for dark and light mode*/
+.blackKey {
+    background-repeat: repeat;
+    background-size: 10%;
+}
+.blackKey:nth-of-type(1) {
+    border: var(--border);
+    width: calc(2.25rem);
+}
+.blackKey:nth-of-type(3) {
+    border: var(--border);
+    width: calc(2.25rem);
+}
+.blackKeySpacer {
+    flex: 0.5;
+    opacity: 0;
+}
+
+.whiteKey.activeKey {
+    background-image: linear-gradient(var(--col03), var(--col06));
+}
+.blackKey.activeKey {
+    background-image: linear-gradient(var(--col03), var(--col06));
+}
+
+@media (prefers-color-scheme: dark) {
+    .blackKey {
+        background-color: var(--col02);
+        background-repeat: repeat;
+        background-size: 10%;
+    }
+    .blackKey.activeKey {
+        background-image: linear-gradient(var(--col05), var(--col04));
+    }
+}

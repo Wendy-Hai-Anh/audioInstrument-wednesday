@@ -1,7 +1,8 @@
 const introDialog = document.getElementById("intro-dialog");
 const introDialogCloseButton = document.getElementById("intro-dialog-close-button");
+const testButton = document.getElementById('test-button');
 // console.log(introDialog);
-
+const synth = new Tone.PolySynth();
 
 ///// Intro Modal
 introDialog.showModal();
@@ -14,18 +15,26 @@ introDialog.addEventListener("close", toneInit);
 async function toneInit(){
     await Tone.start();
     // find our test button
-    const testButton = document.getElementById('test-button');
+
 // init our synth
-    const synth = new Tone.Synth().toDestination();
+synth.connect(Tone.Destination);
 
-// do something when this button is clicked
-    testButton.addEventListener("click", playNote);
 
+
+
+}
 // function that runs when button is clicked
-    function playNote(){
-        //play a note for a duration
-        synth.triggerAttackRelease("c4", "8n");
-    }
+function playNote(){
+    //play a note for a duration
+    synth.triggerAttack("c4");
+}
+// function that runs when button is clicked
+function endNote(){
+    //play a note for a duration
+    synth.triggerRelease("c4");
 }
 
+// do something when this button is clicked
+testButton.addEventListener("mousedown", playNote);
+testButton.addEventListener("mouseup", endNote);
 
