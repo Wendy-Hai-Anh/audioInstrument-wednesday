@@ -143,3 +143,5 @@ function showPressedState() {
 function clearPressedState() {
     flowerButton.classList.remove("is-pressed");
 }
+EventListener("click", playDataNote);
+//testButton.addEventListener("click", playDataNote);
