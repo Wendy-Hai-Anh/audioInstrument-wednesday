@@ -2,29 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Audio Instrument</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garden of Sounds</title>
 
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
-
-    <script src="https://unpkg.com/tone"></script>
     <script src="main.js" defer></script>
 </head>
 <body>
-    <dialog id="intro-dialog">
-        <p>Hi I'm going to make some sound</p>
-        <button id="intro-dialog-close">ok</button>
-    </dialog>
-    <header>
-        <h1>Audio Instrument</h1>
-    </header>
-    <main>
-        <button id="test-button" data-note="c4">sound check</button>
-        <button id="key-test" data-note="d4">key</button>
-    </main>
+    <main class="garden-app">
+        <section class="garden-canvas" aria-labelledby="prototype-title">
+            <div class="sky-glow" aria-hidden="true"></div>
+            <div class="garden-ground" aria-hidden="true"></div>
 
+            <header class="prototype-copy">
+                <p class="eyebrow">Interaction Prototype</p>
+                <h1 id="prototype-title">Garden of Sounds</h1>
+                <p class="instructions">Click, tap, or press Enter or Space on the flower.</p>
+            </header>
+
+            <button
+                id="flower-button"
+                class="flower-button"
+                type="button"
+                aria-describedby="note-status"
+                aria-label="Play the next flower note"
+            >
+                <span class="flower-button__stem" aria-hidden="true"></span>
+                <span class="flower-button__leaf flower-button__leaf--left" aria-hidden="true"></span>
+                <span class="flower-button__leaf flower-button__leaf--right" aria-hidden="true"></span>
+                <span class="flower-button__bloom" aria-hidden="true">
+                    <span class="flower-button__petal flower-button__petal--top"></span>
+                    <span class="flower-button__petal flower-button__petal--right"></span>
+                    <span class="flower-button__petal flower-button__petal--bottom"></span>
+                    <span class="flower-button__petal flower-button__petal--left"></span>
+                    <span class="flower-button__center"></span>
+                </span>
+            </button>
+
+            <p id="note-status" class="note-status" aria-live="polite">
+                Activate the flower to hear the first note.
+            </p>
+        </section>
+    </main>
 </body>
 </html>
