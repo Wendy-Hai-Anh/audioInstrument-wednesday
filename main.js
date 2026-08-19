@@ -11,6 +11,9 @@ const testButton = document.getElementById('test-button');
 // init our synth
 const synth = new Tone.Synth();
 
+//introdialog.showModal();
+//document.body.style.backgroundColor = "red";
+
 ////// Dialog
 // show dialog on page load
 introDialog.showModal();
