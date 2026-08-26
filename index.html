@@ -39,12 +39,17 @@
                     <span class="flower-button__center"></span>
                 </span>
             </button>
-            <audio id="audio-track"src="./asset/audio/p-hase_Leapt.mp3" preload="auto"></audio>
-            <button id="play-button">PLay track</button>
-
-            <p id="note-status" class="note-status" aria-live="polite">
-                Activate the flower to hear the first note.
-            </p>
+            <section class="track-controls" aria-label="Audio track controls">
+                <audio id="audio-track" controls preload="metadata">
+                    <source src="./asset/audio/p-hase_Leapt.mp3" type="audio/mpeg">
+                    Your browser does not support audio playback.
+                </audio>
+                <div class="track-buttons">
+                    <button id="key-test" type="button" data-note="D4">Key</button>
+                    <button id="play-button" type="button">Play track</button>
+                    <button id="random-time" type="button">Random time</button>
+                </div>
+            </section>
         </section>
     </main>
 </body>

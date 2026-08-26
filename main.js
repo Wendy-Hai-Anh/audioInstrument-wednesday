@@ -3,6 +3,7 @@ const noteStatus = document.getElementById("note-status");
 
 const notes = [261.63, 293.66, 329.63, 392, 440, 523.25];
 const noteNames = ["C", "D", "E", "G", "A", "C"];
+const keyButton = document.getElementById("key-test");
 let noteIndex = 0;
 let audioContext;
 
@@ -36,6 +37,7 @@ function playNote() {
 }
 
 flowerButton.addEventListener("click", playNote);
+keyButton.addEventListener("click", playNote);
 
 // key.addEventListener("click" playDataNote);
 // testButton.addEventListener("click", playDataNote);
@@ -43,6 +45,7 @@ flowerButton.addEventListener("click", playNote);
 
 // when i click the button i want to play the audio file
 const playButton = document.getElementById("play-button");
+const randomButton = document.getElementById("random-time");
 const audioTrack = document.getElementById("audio-track");
 
 function playPauseAudio() {
@@ -55,4 +58,37 @@ function playPauseAudio() {
 }
 
 
-playButton.addEventListener("click", playAudio);
+function randomTime() {
+    let tracklength = audioTrack.duration;
+    if (Number.isFinite(tracklength)) {
+        audioTrack.currentTime = tracklength * Math.random(); // how to make them random in a range of 0 to tracklength, just multiply it together
+        audioTrack.play();
+    }
+}
+randomButton.addEventListener("click", randomTime);
+
+
+playButton.addEventListener("click", playPauseAudio);
+
+//set slider to change oscillator
+const oscSlider = document.getElementById("osc-range");
+function changeOsc(e) {
+    console.log(e.target.value); // whatever happen to change (slide it, change it, move it) it will 
+    // log the value of the slider, whwat information we can get from it
+    if (e.target.value > 50) {
+        synth.set({
+            oscillator: {
+                type: "square"
+            }
+        })
+    } else {
+        synth.set({
+            oscillator: {
+                type: "sine"
+            }
+        })
+    }
+
+}
+
+oscSlider.addEventListener("change", changeOsc);
