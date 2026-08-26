@@ -1,147 +1,58 @@
 const flowerButton = document.getElementById("flower-button");
 const noteStatus = document.getElementById("note-status");
 
-// A short looping melody keeps repeated taps feeling musical without needing a full instrument.
-const noteSequence = [
-    { name: "C5", frequency: 523.25 },
-    { name: "E5", frequency: 659.25 },
-    { name: "G5", frequency: 783.99 },
-    { name: "A5", frequency: 880.0 },
-    { name: "G5", frequency: 783.99 },
-    { name: "E5", frequency: 659.25 }
-];
-
-const noteDurationSeconds = 0.36;
-let audioContext;
-let masterGain;
+const notes = [261.63, 293.66, 329.63, 392, 440, 523.25];
+const noteNames = ["C", "D", "E", "G", "A", "C"];
 let noteIndex = 0;
-let noteIsPlaying = false;
-let queuedTap = false;
-let resetTimerId;
+let audioContext;
 
-// Using a real button means the browser gives us mouse, touch, and Enter/Space activation.
-flowerButton.addEventListener("click", handleFlowerActivation);
-
-// These small pressed-state listeners make the control feel responsive across pointer + keyboard input.
-flowerButton.addEventListener("pointerdown", showPressedState);
-flowerButton.addEventListener("pointerup", clearPressedState);
-flowerButton.addEventListener("pointerleave", clearPressedState);
-flowerButton.addEventListener("pointercancel", clearPressedState);
-flowerButton.addEventListener("keydown", handleKeyPressVisual);
-flowerButton.addEventListener("keyup", handleKeyReleaseVisual);
-flowerButton.addEventListener("blur", clearPressedState);
-
-async function handleFlowerActivation() {
-    try {
-        await ensureAudioReady();
-
-        // Keep the prototype monophonic so very fast tapping cannot stack lots of loud oscillators.
-        if (noteIsPlaying) {
-            queuedTap = true;
-            return;
-        }
-
-        playNextNote();
-    } catch (error) {
-        noteStatus.textContent = "Audio could not start in this browser.";
-        console.error(error);
-    }
-}
-
-async function ensureAudioReady() {
-    if (!audioContext) {
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-        audioContext = new AudioContextClass();
-
-        masterGain = audioContext.createGain();
-        masterGain.gain.value = 0.16;
-        masterGain.connect(audioContext.destination);
-    }
+function playNote() {
+    audioContext ??= new AudioContext();
 
     if (audioContext.state === "suspended") {
-        await audioContext.resume();
+        audioContext.resume();
     }
-}
-
-function playNextNote() {
-    const nextNote = noteSequence[noteIndex % noteSequence.length];
-    noteIndex += 1;
-    noteIsPlaying = true;
-    queuedTap = false;
-
-    playTone(nextNote.frequency, noteDurationSeconds);
-    showPlayingState(nextNote.name);
-
-    window.clearTimeout(resetTimerId);
-    resetTimerId = window.setTimeout(() => {
-        finishCurrentNote();
-    }, noteDurationSeconds * 1000);
-}
-
-function playTone(frequency, durationSeconds) {
-    const startTime = audioContext.currentTime;
-    const endTime = startTime + durationSeconds;
 
     const oscillator = audioContext.createOscillator();
-    const noteEnvelope = audioContext.createGain();
+    const gain = audioContext.createGain();
+    const now = audioContext.currentTime;
 
-    // A triangle wave plus a soft gain envelope gives a gentle note without external libraries.
-    oscillator.type = "triangle";
-    oscillator.frequency.setValueAtTime(frequency, startTime);
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(notes[noteIndex], now);
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.28, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9);
 
-    noteEnvelope.gain.setValueAtTime(0.0001, startTime);
-    noteEnvelope.gain.linearRampToValueAtTime(0.14, startTime + 0.03);
-    noteEnvelope.gain.exponentialRampToValueAtTime(0.0001, endTime);
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+    oscillator.start(now);
+    oscillator.stop(now + 0.9);
 
-    oscillator.connect(noteEnvelope);
-    noteEnvelope.connect(masterGain);
-    oscillator.addEventListener("ended", () => {
-        oscillator.disconnect();
-        noteEnvelope.disconnect();
-    });
-
-    oscillator.start(startTime);
-    oscillator.stop(endTime + 0.03);
-}
-
-function showPlayingState(noteName) {
+    noteStatus.textContent = `Note ${noteNames[noteIndex]} is blooming.`;
     flowerButton.classList.remove("is-playing");
-
-    // Restart the class so the grow/bounce/glow animation plays every time a note starts.
     void flowerButton.offsetWidth;
     flowerButton.classList.add("is-playing");
-    noteStatus.textContent = `Playing ${noteName}`;
+    noteIndex = (noteIndex + 1) % notes.length;
 }
 
-function finishCurrentNote() {
-    noteIsPlaying = false;
-    flowerButton.classList.remove("is-playing");
-    noteStatus.textContent = "Activate the flower to hear the next note.";
+flowerButton.addEventListener("click", playNote);
 
-    // Keep one pending tap so the control still feels responsive during quick repeated input.
-    if (queuedTap) {
-        playNextNote();
+// key.addEventListener("click" playDataNote);
+// testButton.addEventListener("click", playDataNote);
+
+
+// when i click the button i want to play the audio file
+const playButton = document.getElementById("play-button");
+const audioTrack = document.getElementById("audio-track");
+
+function playPauseAudio() {
+    // if audio is currently paused, play, else pause playing audio
+    if (audioTrack.paused === true) {
+        audioTrack.play(); //start the playback for this audio if audio is paused
+    } else {
+        audioTrack.pause(); //pause the playback for this audio
     }
 }
 
-function handleKeyPressVisual(event) {
-    if (event.key === "Enter" || event.key === " ") {
-        showPressedState();
-    }
-}
 
-function handleKeyReleaseVisual(event) {
-    if (event.key === "Enter" || event.key === " ") {
-        clearPressedState();
-    }
-}
-
-function showPressedState() {
-    flowerButton.classList.add("is-pressed");
-}
-
-function clearPressedState() {
-    flowerButton.classList.remove("is-pressed");
-}
-EventListener("click", playDataNote);
-//testButton.addEventListener("click", playDataNote);
+playButton.addEventListener("click", playAudio);
