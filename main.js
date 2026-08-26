@@ -92,3 +92,42 @@ function changeOsc(e) {
 }
 
 oscSlider.addEventListener("change", changeOsc);
+
+
+// Spatial control section
+const flowerPainting = document.getElementById("flower-painting");
+
+function startNote() {
+    playNote();
+}
+
+function endNote() {
+}
+
+flowerPainting.addEventListener("mouseenter", startNote);
+flowerPainting.addEventListener("mouseleave", endNote);
+
+function pitchBend (e) {
+    console.log(e.layerX);
+    synth.set({
+        detune: e.layerX
+    });
+}
+
+flowerPainting.addEventListener("mousemove", pitchBend);
+
+//what is the current instant 
+let currentInstant = Temporal.Now.instant();
+//find our timezone
+let timeZone = Temporal.Now.timeZoneID();
+console.log(timeZone);
+//convert to local time
+let currentTime = currentInstant.toZonedDateTimeISO(timeZone);
+console.log(currentTime);
+//convert to current time
+let plainTime = Temporal.PlainTime.from(currentTime);
+console.log(plainTime);
+
+if(plainTime.minute > 54) {
+    audioTrack.playbackRate = 0.5;
+}

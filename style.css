@@ -163,3 +163,8 @@ h1 {
 @keyframes bloom {
     50% { transform: translateX(-50%) scale(1.1) rotate(4deg); }
 }
+
+img {
+    margin: 1rem;
+    position: relative;
+}
