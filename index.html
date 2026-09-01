@@ -3,54 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garden of Sounds</title>
-
-    <link rel="stylesheet" href="reset.css">
+    <title>Garden of Sounds - Mapping Prototype 2</title>
     <link rel="stylesheet" href="style.css">
-    <script src="main.js" defer></script>
+    <script src="https://unpkg.com/tone@14.7.77/build/Tone.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <main class="garden-app">
-        <section class="garden-canvas" aria-labelledby="prototype-title">
-            <div class="sky-glow" aria-hidden="true"></div>
-            <div class="garden-ground" aria-hidden="true"></div>
+    <main class="prototype">
+        <header class="intro">
+            <p class="eyebrow">Garden of Sounds</p>
+            <h1>Mapping Prototype 2</h1>
+            <p>Drag the flower up and down to change its pitch.</p>
+        </header>
 
-            <header class="prototype-copy">
-                <p class="eyebrow">Interaction Prototype</p>
-                <h1 id="prototype-title">Garden of Sounds</h1>
-                <p class="instructions">Click, tap, or press Enter or Space on the flower.</p>
-            </header>
+        <section id="pitch-canvas" class="pitch-canvas" aria-label="Continuous vertical pitch canvas">
+            <span class="pitch-end pitch-end--high" aria-hidden="true">High</span>
+            <span class="pitch-end pitch-end--low" aria-hidden="true">Low</span>
 
-            <button
-                id="flower-button"
-                class="flower-button"
-                type="button"
-                aria-describedby="note-status"
-                aria-label="Play the next flower note"
-            >
-                <span class="flower-button__stem" aria-hidden="true"></span>
-                <span class="flower-button__leaf flower-button__leaf--left" aria-hidden="true"></span>
-                <span class="flower-button__leaf flower-button__leaf--right" aria-hidden="true"></span>
-                <span class="flower-button__bloom" aria-hidden="true">
-                    <span class="flower-button__petal flower-button__petal--top"></span>
-                    <span class="flower-button__petal flower-button__petal--right"></span>
-                    <span class="flower-button__petal flower-button__petal--bottom"></span>
-                    <span class="flower-button__petal flower-button__petal--left"></span>
-                    <span class="flower-button__center"></span>
-                </span>
+            <button id="drag-object" class="drag-object" type="button" aria-label="Drag flower vertically">
+                <span aria-hidden="true">*</span>
             </button>
-            <section class="track-controls" aria-label="Audio track controls">
-                <audio id="audio-track" controls preload="metadata">
-                    <source src="./asset/audio/p-hase_Leapt.mp3" type="audio/mpeg">
-                    Your browser does not support audio playback.
-                </audio>
-                <div class="track-buttons">
-                    <button id="key-test" type="button" data-note="D4">Key</button>
-                    <button id="play-button" type="button">Play track</button>
-                    <button id="random-time" type="button">Random time</button>
-                </div>
-            </section>
         </section>
+
+        <p id="pitch-label" class="pitch-label" role="status" aria-live="polite">370.0 Hz</p>
     </main>
 </body>
 </html>
