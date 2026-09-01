@@ -121,3 +121,4 @@ placeObject(verticalPosition);
 window.addEventListener("resize", () => {
     placeObject(verticalPosition);
 });
+});
