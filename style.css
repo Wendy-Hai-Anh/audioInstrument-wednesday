@@ -30,7 +30,6 @@ body {
 .intro,
 .sound-status {
     width: min(100%, 52rem);
-    margin: 0 auto;
     text-align: center;
 }
 
@@ -42,6 +41,7 @@ body {
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
+    text-align: center;
 }
 
 h1 { margin: 0; font-size: clamp(2rem, 6vw, 3.3rem); }
@@ -126,18 +126,7 @@ h1 { margin: 0; font-size: clamp(2rem, 6vw, 3.3rem); }
     font-weight: 700;
 }
 
-<<<<<<< Updated upstream
-@keyframes bloom {
-    50% { transform: translateX(-50%) scale(1.1) rotate(4deg); }
-}
-
-img {
-    margin: 1rem;
-    position: relative;
-}
-=======
 @media (max-width: 480px) {
     .prototype { padding-inline: 0.75rem; }
     .sound-canvas { min-height: 20rem; height: 58vh; }
 }
->>>>>>> Stashed changes
