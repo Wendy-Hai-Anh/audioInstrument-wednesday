@@ -13,12 +13,6 @@ const zoneNotes = {
     sky: { label: "Sky", notes: ["C5", "E5", "G5", "A5"] }
 };
 
-const noteFrequencies = {
-    C3: 130.81, E3: 164.81, G3: 196, A3: 220,
-    C4: 261.63, E4: 329.63, G4: 392, A4: 440,
-    C5: 523.25, E5: 659.25, G5: 783.99, A5: 880
-};
-
 ///////////// Dragging
 let dragging = false;
 let pointerOffset = { x: 0, y: 0 };
@@ -141,20 +135,25 @@ function highlightZone(zoneKey) {
 }
 
 ///////////// Sound
-let audioContext;
-let masterGain;
-let currentOscillator;
+let synth;
 
-async function prepareAudio() {
-    if (!audioContext) {
-        audioContext = new AudioContext();
-        masterGain = audioContext.createGain();
-        masterGain.gain.value = 0.16;
-        masterGain.connect(audioContext.destination);
-    }
+async function prepareSynth() {
+    // Tone.start() unlocks audio after the user releases the flower.
+    await Tone.start();
 
-    if (audioContext.state === "suspended") {
-        await audioContext.resume();
+    if (!synth) {
+        // Tone.Synth is monophonic, so repeated drops cannot stack many loud notes.
+        synth = new Tone.Synth({
+            oscillator: { type: "sine" },
+            envelope: {
+                attack: 0.04,
+                decay: 0.1,
+                sustain: 0.2,
+                release: 0.3
+            }
+        }).toDestination();
+
+        synth.volume.value = -16;
     }
 }
 
@@ -164,44 +163,10 @@ async function playZoneNote(zoneKey) {
 
     status.textContent = zone.label + " - " + note;
     highlightZone(zoneKey);
-    await prepareAudio();
+    await prepareSynth();
 
-    const now = audioContext.currentTime;
-
-    // Stop the previous note quickly so repeated drops cannot build up in volume.
-    if (currentOscillator) {
-        try {
-            currentOscillator.stop(now + 0.03);
-        } catch (error) {
-            // The oscillator may already have finished naturally.
-        }
-    }
-
-    const oscillator = audioContext.createOscillator();
-    const noteGain = audioContext.createGain();
-    currentOscillator = oscillator;
-
-    oscillator.type = "sine";
-    oscillator.frequency.setValueAtTime(noteFrequencies[note], now);
-
-    // A short fade in and fade out creates a gentle sound without clicks.
-    noteGain.gain.setValueAtTime(0.0001, now);
-    noteGain.gain.exponentialRampToValueAtTime(0.85, now + 0.04);
-    noteGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.55);
-
-    oscillator.connect(noteGain);
-    noteGain.connect(masterGain);
-    oscillator.start(now);
-    oscillator.stop(now + 0.58);
-
-    oscillator.addEventListener("ended", () => {
-        oscillator.disconnect();
-        noteGain.disconnect();
-
-        if (currentOscillator === oscillator) {
-            currentOscillator = null;
-        }
-    });
+    // "8n" is a short eighth-note duration with the synth's smooth envelope.
+    synth.triggerAttackRelease(note, "8n");
 }
 
 ///////////// Setup
