@@ -3,42 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garden of Sounds</title>
-
+    <title>Garden of Sounds - Mapping Prototype 1</title>
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
-    <script src="main.js" defer></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <main class="garden-app">
-        <section class="garden-canvas" aria-labelledby="prototype-title">
-            <div class="sky-glow" aria-hidden="true"></div>
-            <div class="garden-ground" aria-hidden="true"></div>
+    <main class="prototype">
+        <header class="intro">
+            <p class="label">Garden of Sounds</p>
+            <h1>Mapping Prototype 1</h1>
+            <p>Drag the flower into the sky, garden, or underground, then release it to hear its note.</p>
+        </header>
 
-            <header class="prototype-copy">
-                <p class="eyebrow">Interaction Prototype</p>
-                <h1 id="prototype-title">Garden of Sounds</h1>
-                <p class="instructions">Click, tap, or press Enter or Space on the flower.</p>
-            </header>
+        <section id="sound-canvas" class="sound-canvas" aria-label="Three-zone garden sound canvas">
+            <div class="zone zone--sky" data-zone="sky" aria-hidden="true"><span>Sky</span></div>
+            <div class="zone zone--garden" data-zone="garden" aria-hidden="true"><span>Garden</span></div>
+            <div class="zone zone--underground" data-zone="underground" aria-hidden="true"><span>Underground</span></div>
 
-            <button
-                id="flower-button"
-                class="flower-button"
-                type="button"
-                aria-describedby="note-status"
-                aria-label="Play the next flower note"
-            >
-                <span class="flower-button__stem" aria-hidden="true"></span>
-                <span class="flower-button__leaf flower-button__leaf--left" aria-hidden="true"></span>
-                <span class="flower-button__leaf flower-button__leaf--right" aria-hidden="true"></span>
-                <span class="flower-button__bloom" aria-hidden="true">
-                    <span class="flower-button__petal flower-button__petal--top"></span>
-                    <span class="flower-button__petal flower-button__petal--right"></span>
-                    <span class="flower-button__petal flower-button__petal--bottom"></span>
-                    <span class="flower-button__petal flower-button__petal--left"></span>
-                    <span class="flower-button__center"></span>
-                </span>
+            <!-- A button gives the draggable object a meaningful accessible name. -->
+            <button id="draggable-flower" class="draggable-flower" type="button" aria-label="Draggable flower">
+                <span aria-hidden="true">*</span>
             </button>
+<<<<<<< Updated upstream
             <section class="track-controls" aria-label="Audio track controls">
                 <audio id="audio-track" controls preload="metadata">
                     <source src="./asset/audio/p-hase_Leapt.mp3" type="audio/mpeg">
@@ -54,7 +41,13 @@
                     alt="painting of flowwers in a vase" id="flower-painting" data-note="a3">
                 </div>
             </section>
+=======
+>>>>>>> Stashed changes
         </section>
+
+        <p id="sound-status" class="sound-status" role="status" aria-live="polite">
+            Drop the flower in a zone to play a sound.
+        </p>
     </main>
 </body>
 </html>

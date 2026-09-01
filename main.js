@@ -37,6 +37,7 @@ function playNote() {
 }
 
 flowerButton.addEventListener("click", playNote);
+<<<<<<< Updated upstream
 keyButton.addEventListener("click", playNote);
 
 // key.addEventListener("click" playDataNote);
@@ -131,3 +132,6 @@ console.log(plainTime);
 if(plainTime.minute > 54) {
     audioTrack.playbackRate = 0.5;
 }
+=======
+keyButton.addEventListener("click", playNote);
+>>>>>>> Stashed changes
